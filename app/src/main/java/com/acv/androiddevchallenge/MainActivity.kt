@@ -13,34 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.androiddevchallenge
+package com.acv.androiddevchallenge
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.androiddevchallenge.ui.theme.MyTheme
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.acv.androiddevchallenge.common.MainViewModelFactory
+import com.acv.androiddevchallenge.data.PuppyRepository
+import com.acv.androiddevchallenge.ui.model.Puppy
+import com.acv.androiddevchallenge.ui.screen.main.MainViewModel
+import com.acv.androiddevchallenge.ui.screen.main.MyApp
+import com.acv.androiddevchallenge.ui.screen.main.Screen
+import com.acv.androiddevchallenge.ui.theme.MyTheme
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MyTheme {
-                MyApp()
+                MyApp(viewModel(factory = MainViewModelFactory(PuppyRepository)))
             }
         }
-    }
-}
-
-// Start building your app here!
-@Composable
-fun MyApp() {
-    Surface(color = MaterialTheme.colors.background) {
-        Text(text = "Ready... Set... GO!")
     }
 }
 
@@ -48,7 +53,7 @@ fun MyApp() {
 @Composable
 fun LightPreview() {
     MyTheme {
-        MyApp()
+        MyApp(viewModel(factory = MainViewModelFactory(PuppyRepository)))
     }
 }
 
@@ -56,6 +61,6 @@ fun LightPreview() {
 @Composable
 fun DarkPreview() {
     MyTheme(darkTheme = true) {
-        MyApp()
+        MyApp(viewModel(factory = MainViewModelFactory(PuppyRepository)))
     }
 }
