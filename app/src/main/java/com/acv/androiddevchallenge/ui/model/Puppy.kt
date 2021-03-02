@@ -1,6 +1,7 @@
 package com.acv.androiddevchallenge.ui.model
 
 inline class Id(val value: Int)
+inline class Url(val value: String)
 
 data class Puppy(
     val id: Id,
@@ -9,10 +10,10 @@ data class Puppy(
     val gender: Gender,
     val breed: Breed,
     val temperament: List<Temperament>,
-    val group: Group,
     val size: Size,
     val info: String,
     val location: Location,
+    val image: Url?,
 )
 
 data class Location(
@@ -29,7 +30,11 @@ enum class Gender {
 }
 
 enum class Breed {
-    YorkshireTerrier
+    YorkshireTerrier,
+    GermanShepherds,
+    GoldenRetrievers,
+    FrenchBulldogs,
+    Beagles,
 }
 
 enum class Size {
@@ -38,15 +43,6 @@ enum class Size {
     Medium,
     Large,
     Giant,
-}
-
-enum class Group {
-    Toy,
-    Sporting,
-    Hound,
-    Terrier,
-    Working,
-    Herding,
 }
 
 enum class Temperament {

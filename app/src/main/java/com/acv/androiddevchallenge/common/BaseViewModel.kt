@@ -3,7 +3,9 @@ package com.acv.androiddevchallenge.common
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.acv.androiddevchallenge.data.PuppyRepository
-import com.acv.androiddevchallenge.ui.screen.main.MainViewModel
+import com.acv.androiddevchallenge.ui.model.Id
+import com.acv.androiddevchallenge.ui.screen.detail.PuppyDetailViewModel
+import com.acv.androiddevchallenge.ui.screen.puppies.PuppyViewModel
 
 abstract class BaseViewModel : ViewModel()
 
@@ -20,6 +22,10 @@ sealed class ViewModelProviderFactory : ViewModelProvider.Factory {
     }
 }
 
-class MainViewModelFactory(repository: PuppyRepository) : ViewModelProviderFactory() {
-    override val model: BaseViewModel = MainViewModel(repository)
+class PuppyViewModelFactory(repository: PuppyRepository) : ViewModelProviderFactory() {
+    override val model: BaseViewModel = PuppyViewModel(repository)
+}
+
+class PuppyDetailViewModelFactory(repository: PuppyRepository, id: Id) : ViewModelProviderFactory() {
+    override val model: BaseViewModel = PuppyDetailViewModel(repository, id)
 }

@@ -15,12 +15,34 @@
  */
 package com.acv.androiddevchallenge.ui.theme
 
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 
-val shapes = Shapes(
-    small = RoundedCornerShape(4.dp),
-    medium = RoundedCornerShape(4.dp),
-    large = RoundedCornerShape(0.dp)
-)
+enum class PuppyShapes(val value: Shapes) {
+    Cut(
+        Shapes(
+            small = CutCornerShape(2.dp),
+            medium = CutCornerShape(4.dp),
+            large = CutCornerShape(0.dp)
+        )
+    ),
+    Rounded(
+        Shapes(
+            small = RoundedCornerShape(2.dp),
+            medium = RoundedCornerShape(4.dp),
+            large = RoundedCornerShape(0.dp)
+        )
+    ),
+    Custom(
+        Shapes(
+            small = RoundedCornerShape(2.dp),
+            medium = CutCornerShape(4.dp),
+            large = RoundedCornerShape(10.dp)
+        )
+    )
+
+}
+

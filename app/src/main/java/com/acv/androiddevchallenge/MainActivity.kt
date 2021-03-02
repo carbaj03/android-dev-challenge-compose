@@ -18,32 +18,33 @@ package com.acv.androiddevchallenge
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.*
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.acv.androiddevchallenge.common.MainViewModelFactory
+import com.acv.androiddevchallenge.common.PuppyDetailViewModelFactory
+import com.acv.androiddevchallenge.common.PuppyViewModelFactory
 import com.acv.androiddevchallenge.data.PuppyRepository
-import com.acv.androiddevchallenge.ui.model.Puppy
-import com.acv.androiddevchallenge.ui.screen.main.MainViewModel
-import com.acv.androiddevchallenge.ui.screen.main.MyApp
-import com.acv.androiddevchallenge.ui.screen.main.Screen
-import com.acv.androiddevchallenge.ui.theme.MyTheme
+import com.acv.androiddevchallenge.ui.model.Id
+import com.acv.androiddevchallenge.ui.screen.puppies.PuppyApp
+import com.acv.androiddevchallenge.ui.theme.PuppyShapes
+import com.acv.androiddevchallenge.ui.theme.PuppyTheme
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyTheme {
-                MyApp(viewModel(factory = MainViewModelFactory(PuppyRepository)))
+            var theme by remember { mutableStateOf(PuppyTheme.Light) }
+            var shape by remember { mutableStateOf(PuppyShapes.Cut) }
+            PuppyTheme(theme, shape) {
+                PuppyApp(
+                    puppyViewModel = viewModel(factory = PuppyViewModelFactory(PuppyRepository)),
+                    puppyDetailViewModel = viewModel(factory = PuppyDetailViewModelFactory(PuppyRepository, Id(1))),
+                    onThemeChange = { theme = it },
+                    onShapeChange = { shape = it },
+                    theme = theme,
+                    shape = shape,
+                )
             }
         }
     }
@@ -52,15 +53,29 @@ class MainActivity : AppCompatActivity() {
 @Preview("Light Theme", widthDp = 360, heightDp = 640)
 @Composable
 fun LightPreview() {
-    MyTheme {
-        MyApp(viewModel(factory = MainViewModelFactory(PuppyRepository)))
+    PuppyTheme(PuppyTheme.Light, PuppyShapes.Cut) {
+        PuppyApp(
+            puppyViewModel = viewModel(factory = PuppyViewModelFactory(PuppyRepository)),
+            puppyDetailViewModel = viewModel(factory = PuppyDetailViewModelFactory(PuppyRepository, Id(1))),
+            onThemeChange = { },
+            onShapeChange = { },
+            theme = PuppyTheme.Light,
+            shape = PuppyShapes.Cut,
+        )
     }
 }
 
 @Preview("Dark Theme", widthDp = 360, heightDp = 640)
 @Composable
 fun DarkPreview() {
-    MyTheme(darkTheme = true) {
-        MyApp(viewModel(factory = MainViewModelFactory(PuppyRepository)))
+    PuppyTheme(PuppyTheme.Dark, PuppyShapes.Cut) {
+        PuppyApp(
+            puppyViewModel = viewModel(factory = PuppyViewModelFactory(PuppyRepository)),
+            puppyDetailViewModel = viewModel(factory = PuppyDetailViewModelFactory(PuppyRepository, Id(1))),
+            onThemeChange = { },
+            onShapeChange = { },
+            theme = PuppyTheme.Dark,
+            shape = PuppyShapes.Cut,
+        )
     }
 }
